@@ -1,0 +1,16 @@
+<!doctype html>
+<html ng-cloak>
+  <head>
+    <meta charset="utf-8">
+    <title>Keycloak Test</title>
+  </head>
+  <body ng-cloak>
+  	<h1>
+  		Hello, {{currentUser.username}}!
+  	</h1>
+  	<a ng-click="userLogout()" href="#">Logout</a>
+  	<script src="https://code.angularjs.org/1.4.7/angular.min.js"></script>
+  	<script src="/keycloak.js"></script>
+  	<script src="/app.js"></script>
+  </body>
+</html>
