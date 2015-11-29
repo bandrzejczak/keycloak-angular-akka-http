@@ -5,11 +5,13 @@
     <title>Keycloak Test</title>
   </head>
   <body ng-cloak>
-  	<h1>
-  		Hello, {{currentUser.username}}!
-  	</h1>
+  	<div>
+      You've been authorized using token {{authData.token}}<br />
+      Your preferred username is {{authData.username}}.
+  	</div>
   	<a ng-click="userLogout()" href="#">Logout</a>
   	<script src="https://code.angularjs.org/1.4.7/angular.min.js"></script>
+  	<script src="https://code.angularjs.org/1.4.7/angular-cookies.min.js"></script>
   	<script src="/keycloak.js"></script>
   	<script src="/app.js"></script>
   </body>

@@ -1,1 +1,6 @@
 keycloak/
+.idea
+*.iml
+target
+log
+
