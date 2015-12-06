@@ -10,13 +10,15 @@ class OAuth2Authorization(logger: LoggingAdapter, tokenVerifier: TokenVerifier) 
   def authorized: Directive1[OAuth2Token] = {
     bearerToken.flatMap {
       case Some(token) =>
-        tokenVerifier.verifyToken(token)
-          .map(username => provide(OAuth2Token(token, username)))
-          .recover {
-            case ex =>
-              logger.error(ex, "Couldn't log in using provided authorization token")
-              reject(AuthorizationFailedRejection).toDirective[Tuple1[OAuth2Token]]
-          }.get
+        onComplete(tokenVerifier.verifyToken(token)).flatMap {
+          _.map(username => provide(OAuth2Token(token, username)))
+            .recover {
+              case ex =>
+                logger.error(ex, "Couldn't log in using provided authorization token")
+                reject(AuthorizationFailedRejection).toDirective[Tuple1[OAuth2Token]]
+            }
+            .get
+        }
       case None =>
         reject(AuthorizationFailedRejection)
     }

@@ -1,8 +1,8 @@
 package com.bandrzejczak.sso.oauth2
 
-import scala.util.Try
+import scala.concurrent.Future
 
 trait TokenVerifier {
-  def verifyToken(token: String): Try[String]
+  def verifyToken(token: String): Future[String]
 }
 
