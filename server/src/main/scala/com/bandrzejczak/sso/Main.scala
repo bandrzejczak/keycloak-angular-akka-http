@@ -4,14 +4,11 @@ import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.MediaTypes._
-import akka.http.scaladsl.model.{ContentType, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-import akka.util.ByteString
 import com.bandrzejczak.sso.oauth2.{KeycloakTokenVerifier, OAuth2Authorization, OAuth2Token}
 import org.keycloak.adapters.KeycloakDeploymentBuilder
-import spray.json.{RootJsonFormat, DefaultJsonProtocol}
+import spray.json.{DefaultJsonProtocol, RootJsonFormat}
 
 object Main extends App with Jsonp with JsonProtocol {
   implicit val system = ActorSystem("sso-system")
@@ -37,22 +34,6 @@ object Main extends App with Jsonp with JsonProtocol {
   }
 
   Http().bindAndHandle(routes, "localhost", 9000)
-}
-
-trait Jsonp {
-  def jsonpWithParameter(parameterName: String) =
-    parameter(parameterName.?).flatMap {
-      case Some(wrapper) =>
-        mapResponseEntity {
-          case HttpEntity.Strict(ct @ ContentType(`application/json`, _), data) =>
-            HttpEntity.Strict(
-              ct.withMediaType(`application/javascript`),
-              ByteString(wrapper + "(") ++ data ++ ByteString(")")
-            )
-          case entity => entity
-        }
-      case None => pass
-    }
 }
 
 trait JsonProtocol extends DefaultJsonProtocol with SprayJsonSupport {
