@@ -6,7 +6,6 @@ scalaVersion := "2.11.7"
 
 val akkaV = "2.4.1"
 val akkaStreamV = "2.0-M2"
-val scalaTestV = "2.2.5"
 
 val akka = Seq (
   "com.typesafe.akka" %% "akka-actor" % akkaV,
