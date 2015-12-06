@@ -2,8 +2,8 @@ package com.bandrzejczak.sso.oauth2
 
 import akka.event.LoggingAdapter
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
+import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
-import Directives._
 
 class OAuth2Authorization(logger: LoggingAdapter, tokenVerifier: TokenVerifier) {
 
@@ -14,7 +14,7 @@ class OAuth2Authorization(logger: LoggingAdapter, tokenVerifier: TokenVerifier) 
           .map(username => provide(OAuth2Token(token, username)))
           .recover {
             case ex =>
-              logger.error(ex, "Couldn't log in using Bearer token")
+              logger.error(ex, "Couldn't log in using provided authorization token")
               reject(AuthorizationFailedRejection).toDirective[Tuple1[OAuth2Token]]
           }.get
       case None =>
