@@ -15,7 +15,7 @@ val keycloakDependencies = Seq (
 
 libraryDependencies ++= {
   val akkaV = "2.4.1"
-  val akkaStreamV = "2.0-M1"
+  val akkaStreamV = "2.0-M2"
   val scalaTestV = "2.2.5"
   Seq(
     "org.slf4j" % "slf4j-api" % "1.7.12",
@@ -25,8 +25,6 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-actor" % akkaV,
     "com.typesafe.akka" %% "akka-http-experimental" % akkaStreamV,
     "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaStreamV,
-    "com.typesafe.akka" %% "akka-http-testkit-experimental" % akkaStreamV,
     "org.scalatest" %% "scalatest" % scalaTestV % "test"
-
   ) ++ keycloakDependencies
 }
